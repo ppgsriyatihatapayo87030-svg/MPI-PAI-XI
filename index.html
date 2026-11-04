@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran PAI & BP Kelas XI - SMAS AL-HILAAL TEHORU</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter & Amiri for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#1E293B',
+                            900: '#0F172A',
+                            950: '#090D16',
+                        },
+                        emerald: {
+                            500: '#10B981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        arabic: ['Amiri', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            line-height: 2.2;
+        }
+        .tab-btn.active {
+            background-color: #10B981;
+            color: #ffffff;
+            border-color: #10B981;
+        }
+        .sub-tab-btn.active {
+            border-bottom: 3px solid #10B981;
+            color: #10B981;
+            font-weight: 700;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificate-print-area, #certificate-print-area * {
+                visibility: visible;
+            }
+            #certificate-print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+
+    <!-- NAVIGATION HEADER -->
+    <header class="bg-navy-900 text-white sticky top-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Branding & Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('beranda')">
+                    <div class="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-white font-extrabold text-xl shadow-lg border-2 border-emerald-400">
+                        <i class="fa-solid fa-kaaba"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-base sm:text-lg font-bold text-emerald-400 tracking-wide">PAI & BUDI PEKERTI XI</h1>
+                        <p class="text-xs text-slate-300">SMAS AL-HILAAL TEHORU • Fase F</p>
+                    </div>
+                </div>
+
+                <!-- Main Desktop Navigation Menu -->
+                <nav class="hidden lg:flex space-x-1 font-medium text-sm">
+                    <button onclick="switchTab('beranda')" id="nav-beranda" class="tab-btn active px-3 py-2 rounded-lg transition duration-200">
+                        <i class="fa-solid fa-house mr-1.5"></i>Beranda
+                    </button>
+                    <button onclick="switchTab('materi')" id="nav-materi" class="tab-btn px-3 py-2 rounded-lg hover:bg-navy-800 text-slate-300 hover:text-white transition duration-200">
+                        <i class="fa-solid fa-book-open mr-1.5"></i>Materi Bab 3
+                    </button>
+                    <button onclick="switchTab('interaktif')" id="nav-interaktif" class="tab-btn px-3 py-2 rounded-lg hover:bg-navy-800 text-slate-300 hover:text-white transition duration-200">
+                        <i class="fa-solid fa-gamepad mr-1.5"></i>Fitur Interaktif
+                    </button>
+                    <button onclick="switchTab('evaluasi')" id="nav-evaluasi" class="tab-btn px-3 py-2 rounded-lg hover:bg-navy-800 text-slate-300 hover:text-white transition duration-200">
+                        <i class="fa-solid fa-pen-to-square mr-1.5"></i>Evaluasi Kuis
+                    </button>
+                    <button onclick="switchTab('sertifikat')" id="nav-sertifikat" class="tab-btn px-3 py-2 rounded-lg hover:bg-navy-800 text-slate-300 hover:text-white transition duration-200">
+                        <i class="fa-solid fa-certificate mr-1.5 text-amber-400"></i>Sertifikat
+                    </button>
+                    <button onclick="openTeacherPinModal()" id="nav-guru" class="px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition duration-200 shadow-sm ml-2">
+                        <i class="fa-solid fa-user-tie mr-1.5"></i>Ruang Guru
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden">
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg bg-navy-800 text-slate-200 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-navy-950 border-t border-navy-800 px-4 pt-2 pb-4 space-y-2 text-sm">
+            <button onclick="switchTab('beranda'); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg text-white hover:bg-navy-800">
+                <i class="fa-solid fa-house w-6"></i>Beranda
+            </button>
+            <button onclick="switchTab('materi'); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg text-white hover:bg-navy-800">
+                <i class="fa-solid fa-book-open w-6"></i>Materi Pembelajaran
+            </button>
+            <button onclick="switchTab('interaktif'); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg text-white hover:bg-navy-800">
+                <i class="fa-solid fa-gamepad w-6"></i>Fitur Interaktif
+            </button>
+            <button onclick="switchTab('evaluasi'); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg text-white hover:bg-navy-800">
+                <i class="fa-solid fa-pen-to-square w-6"></i>Evaluasi / Kuis
+            </button>
+            <button onclick="switchTab('sertifikat'); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg text-amber-400 hover:bg-navy-800">
+                <i class="fa-solid fa-certificate w-6"></i>Sertifikat Digital
+            </button>
+            <button onclick="openTeacherPinModal(); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg bg-emerald-600 text-white font-semibold">
+                <i class="fa-solid fa-user-tie w-6"></i>Ruang Guru (Khusus Guru)
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= PAGE 1: BERANDA ================= -->
+        <section id="page-beranda" class="space-y-8">
+            <!-- Hero Banner -->
+            <div class="relative bg-gradient-to-r from-navy-900 via-navy-800 to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-2xl overflow-hidden border border-slate-700">
+                <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-3xl space-y-5">
+                    <div class="inline-flex items-center space-x-2 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Pendidikan Agama Islam & Budi Pekerti • Kelas XI Semester Ganjil</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Menghindari Perkelahian Antar Pelajar, Miras, dan Narkoba
+                    </h1>
+
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Media pembelajaran interaktif berbasis digital yang dirancang khusus untuk mewujudkan generasi muda muslim berakhlak mulia, berilmu, dan terlindungi dari bahaya konflik serta zat adiktif.
+                    </p>
+
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="switchTab('materi')" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-lg transition duration-200 transform hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> Mulai Belajar Sekarang
+                        </button>
+                        <button onclick="openModal('modal-petunjuk')" class="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl border border-slate-600 transition duration-200 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info"></i> Petunjuk Penggunaan
+                        </button>
+                        <button onclick="openModal('modal-tujuan')" class="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl border border-slate-600 transition duration-200 flex items-center gap-2">
+                            <i class="fa-solid fa-bullseye"></i> Tujuan Pembelajaran
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Teacher Card Overlay Info -->
+                <div class="mt-8 pt-6 border-t border-slate-700/60 flex flex-wrap items-center justify-between gap-4 text-xs sm:text-sm text-slate-300">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center font-bold text-white shadow">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-xs">Guru Pengampu:</p>
+                            <p class="font-bold text-white">Sriyati Hafifah Hatapayo, S.Pd., Gr.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-navy-950/60 px-4 py-2 rounded-lg border border-slate-800">
+                        <i class="fa-solid fa-school text-emerald-400"></i>
+                        <span class="font-semibold text-slate-200">SMAS AL-HILAAL TEHORU</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div onclick="switchTab('materi'); switchSubTab('materi-perkelahian')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer group">
+                    <div class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-people-robbery"></i>
+                    </div>
+                    <span class="text-xs font-bold text-red-600 uppercase tracking-wider">Materi 01</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-2 group-hover:text-emerald-600 transition">Perkelahian Antar Pelajar</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Memahami penyebab tawuran, dampak negatif, pencegahan, dan pentingnya menjaga ukhuwah Islamiyah (QS. Al-Hujurat: 10-11).
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div onclick="switchTab('materi'); switchSubTab('materi-miras')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer group">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-wine-bottle"></i>
+                    </div>
+                    <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Materi 02</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-2 group-hover:text-emerald-600 transition">Minuman Keras (Miras)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Mempelajari pengertian khamr, bahaya terhadap akal & kesehatan, hukum syariat, dan tadabbur QS. Al-Maidah: 90-91.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div onclick="switchTab('materi'); switchSubTab('materi-narkoba')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer group">
+                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-capsules"></i>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Materi 03</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-2 group-hover:text-emerald-600 transition">Bahaya Narkoba</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Menganalisis dampak zat adiktif bagi masa depan remaja, pandangan Hadis Nabi, dan langkah praktis benteng diri.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Motivational Highlight -->
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="text-3xl text-emerald-600">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div>
+                        <p class="text-emerald-950 font-bold text-base sm:text-lg">"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain."</p>
+                        <p class="text-emerald-700 text-xs sm:text-sm">HR. Ahmad, Ath-Thabrani • Jauhi perilaku merusak dan tingkatkan karya bermanfaat.</p>
+                    </div>
+                </div>
+                <button onclick="switchTab('evaluasi')" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl whitespace-nowrap shadow-sm">
+                    Uji Pemahaman (Kuis) <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 2: MATERI PEMBELAJARAN ================= -->
+        <section id="page-materi" class="hidden space-y-6">
+            <!-- Header Section -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Modul Pembelajaran Utama</span>
+                        <h2 class="text-2xl font-extrabold text-navy-900">Bab 3: Menjaga Kehormatan & Akhlak Remaja</h2>
+                    </div>
+                    <!-- Sub Tabs Navigation -->
+                    <div class="flex overflow-x-auto space-x-2 border-b sm:border-0 pb-2 sm:pb-0">
+                        <button onclick="switchSubTab('materi-perkelahian')" id="subnav-materi-perkelahian" class="sub-tab-btn active px-4 py-2 text-sm font-medium whitespace-nowrap transition">
+                            <i class="fa-solid fa-people-robbery mr-1.5"></i>1. Perkelahian Pelajar
+                        </button>
+                        <button onclick="switchSubTab('materi-miras')" id="subnav-materi-miras" class="sub-tab-btn px-4 py-2 text-sm font-medium whitespace-nowrap text-slate-500 hover:text-slate-900 transition">
+                            <i class="fa-solid fa-wine-bottle mr-1.5"></i>2. Minuman Keras (Miras)
+                        </button>
+                        <button onclick="switchSubTab('materi-narkoba')" id="subnav-materi-narkoba" class="sub-tab-btn px-4 py-2 text-sm font-medium whitespace-nowrap text-slate-500 hover:text-slate-900 transition">
+                            <i class="fa-solid fa-capsules mr-1.5"></i>3. Narkoba
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB TAB 1: PERKELAHIAN ANTAR PELAJAR -->
+                <div id="subtab-materi-perkelahian" class="mt-6 space-y-6">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="text-lg font-bold text-navy-900 flex items-center gap-2">
+                            <i class="fa-solid fa-book text-emerald-600"></i> Pengertian Perkelahian Antar Pelajar
+                        </h3>
+                        <p class="text-slate-700 leading-relaxed text-sm">
+                            Perkelahian antar pelajar (tawuran) adalah suatu bentuk tindakan kekerasan atau agresi fisik yang dilakukan secara bersama-sama oleh sekelompok peserta didik terhadap kelompok pelajar lainnya. Tindakan ini merupakan perbuatan tercela (akhlak mazmumah) yang melanggar nilai sosial, hukum negara, dan ajaran Islam.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Penyebab -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                            <h4 class="font-bold text-slate-900 text-base flex items-center gap-2 text-red-600">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Faktor Penyebab Tawuran
+                            </h4>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-1.5">
+                                <li><strong>Faktor Internal:</strong> Lemahnya kontrol diri, ketidakmampuan mengelola emosi, krisis identitas, dan rasa gengsi berlebihan.</li>
+                                <li><strong>Faktor Eksternal:</strong> Pengaruh pergaulan bebas (peer pressure), provokasi media sosial, solidaritas kelompok yang salah arah, serta kurangnya pengawasan lingkungan sekitar.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Dampak -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                            <h4 class="font-bold text-slate-900 text-base flex items-center gap-2 text-amber-600">
+                                <i class="fa-solid fa-burst"></i> Dampak Negatif Tawuran
+                            </h4>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-1.5">
+                                <li><strong>Diri Sendiri:</strong> Cedera fisik, cacat permanen, hilangnya nyawa, trauma psikologis, dan proses hukum.</li>
+                                <li><strong>Keluarga & Sekolah:</strong> Mencemarkan nama baik orang tua/sekolah dan membawa duka mendalam.</li>
+                                <li><strong>Masyarakat:</strong> Kerusakan fasilitas umum dan terganggunya ketertiban serta rasa aman warga.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- DALIL AL-QUR'AN -->
+                    <div class="bg-navy-900 text-white p-6 rounded-2xl space-y-4 border border-navy-800 shadow-lg">
+                        <div class="flex items-center justify-between border-b border-navy-700 pb-3">
+                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest"><i class="fa-solid fa-quran mr-1"></i> Dalil Naqli Al-Qur'an</span>
+                            <span class="text-xs text-slate-400">QS. Al-Hujurat [49]: Ayat 10 - 11</span>
+                        </div>
+                        
+                        <!-- Ayat 10 -->
+                        <div class="space-y-3">
+                            <p class="text-xs font-semibold text-emerald-300 uppercase">QS. Al-Hujurat (49) : 10</p>
+                            <p class="arabic-text text-2xl sm:text-3xl text-emerald-300 font-arabic text-right py-2">
+                                إِنَّمَا ٱلْمُؤْمِنُونَ إِخْوَةٌ فَأَصْلِحُواْ بَيْنَ أَخَوَيْكُمْ ۚ وَٱتَّقُواْ ٱللَّهَ لَعَلَّكُمْ تُرْحَمُونَ
+                            </p>
+                            <p class="text-xs sm:text-sm text-slate-300 italic font-mono">
+                                "Innamal-mu'minūna ikhwatun fa aṣliḥū baina akhawaikum wattaqullāha la'allakum turḥamūn."
+                            </p>
+                            <p class="text-sm text-slate-200">
+                                <strong>Artinya:</strong> "Orang-orang beriman itu sesungguhnya bersaudara. Sebab itu damaikanlah (perbaikilah hubungan) antara kedua saudaramu itu dan takutlah terhadap Allah, supaya kamu mendapat rahmat."
+                            </p>
+                        </div>
+
+                        <!-- Ayat 11 Ringkas -->
+                        <div class="border-t border-navy-800 pt-3 space-y-2">
+                            <p class="text-xs font-semibold text-emerald-300 uppercase">Kandungan QS. Al-Hujurat (49) : 11</p>
+                            <p class="text-sm text-slate-300">
+                                Allah SWT melarang sesama muslim untuk saling mencela, mengolok-olok, memanggil dengan julukan yang buruk, dan saling membenci karena perbuatan tersebut merusak tali persaudaraan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Cara Mencegah & Refleksi -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-xl space-y-2">
+                            <h4 class="font-bold text-emerald-900 text-base flex items-center gap-2">
+                                <i class="fa-solid fa-hand-holding-hand text-emerald-600"></i> Cara Mencegah Perkelahian
+                            </h4>
+                            <p class="text-xs sm:text-sm text-emerald-800">
+                                1. Mengembangkan sikap tasamuh (toleransi) dan khusnuzan (berbaik sangka).<br>
+                                2. Memilih lingkaran pertemanan yang positif dan saling mengingatkan kebaikan.<br>
+                                3. Menyelesaikan masalah melalui musyawarah tanpa kekerasan.
+                            </p>
+                        </div>
+
+                        <div class="bg-amber-50 border border-amber-200 p-5 rounded-xl space-y-2">
+                            <h4 class="font-bold text-amber-900 text-base flex items-center gap-2">
+                                <i class="fa-solid fa-lightbulb text-amber-600"></i> Refleksi & Pesan Moral
+                            </h4>
+                            <p class="text-xs sm:text-sm text-amber-800">
+                                Kekuatan sejati bukanlah kemampuan untuk menumbangkan lawan dalam perkelahian, melainkan kemampuan menahan emosi saat marah (HR. Bukhari & Muslim).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB TAB 2: MINUMAN KERAS (MIRAS) -->
+                <div id="subtab-materi-miras" class="hidden mt-6 space-y-6">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="text-lg font-bold text-navy-900 flex items-center gap-2">
+                            <i class="fa-solid fa-wine-bottle text-amber-600"></i> Pengertian Khamr & Miras
+                        </h3>
+                        <p class="text-slate-700 leading-relaxed text-sm">
+                            Secara bahasa, <strong>Khamr</strong> berarti menutup. Menurut istilah syariat, khamr adalah segala jenis minuman atau sesuatu yang memabukkan dan dapat menghilangkan kesadaran/akal sehat manusia. Islam secara tegas mengharamkan konsumsi khamr dalam jumlah banyak maupun sedikit.
+                        </p>
+                    </div>
+
+                    <!-- Bahaya Miras -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                            <div class="text-amber-500 font-bold text-lg"><i class="fa-solid fa-brain mr-1"></i> Merusak Akal</div>
+                            <p class="text-xs text-slate-600">Menghilangkan kesadaran, menurunkan daya pikir, dan memicu kecanduan yang merusak saraf otak.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                            <div class="text-red-500 font-bold text-lg"><i class="fa-solid fa-heart-pulse mr-1"></i> Bahaya Fisik</div>
+                            <p class="text-xs text-slate-600">Menyebabkan kerusakan organ seperti hati (sirosis), lambung, jantung, serta kematian berujung fatal.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                            <div class="text-purple-500 font-bold text-lg"><i class="fa-solid fa-users-slash mr-1"></i> Dampak Sosial</div>
+                            <p class="text-xs text-slate-600">Memicu kriminalitas, kekerasan dalam rumah tangga/masyarakat, dan menghancurkan masa depan.</p>
+                        </div>
+                    </div>
+
+                    <!-- DALIL AL-QUR'AN MIRAS -->
+                    <div class="bg-navy-900 text-white p-6 rounded-2xl space-y-4 border border-navy-800 shadow-lg">
+                        <div class="flex items-center justify-between border-b border-navy-700 pb-3">
+                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest"><i class="fa-solid fa-quran mr-1"></i> Larangan Miras & Judi</span>
+                            <span class="text-xs text-slate-400">QS. Al-Ma'idah [5]: Ayat 90 - 91</span>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <p class="arabic-text text-2xl sm:text-3xl text-emerald-300 font-arabic text-right py-2 leading-loose">
+                                يٰٓاَيُّهَا الَّذِيْنَ اٰمَنُوْٓا اِنَّمَا الْخَمْرُ وَالْمَيْسِرُ وَالْاَنْصَابُ وَالْاَزْلَامُ رِجْسٌ مِّنْ عَمَلِ الشَّيْطٰنِ فَاجْتَنِبُوْهُ لَعَلَّكُمْ تُفْلِحُوْنَ
+                            </p>
+                            <p class="text-xs sm:text-sm text-slate-300 italic font-mono">
+                                "Yā ayyuhallażīna āmanū innamal-khamru wal-maisiru wal-anṣābu wal-azlāmu rijsum min 'amaliś-śaiṭāni fajtanibūhu la'allakum tufliḥūn."
+                            </p>
+                            <p class="text-sm text-slate-200">
+                                <strong>Artinya:</strong> "Wahai orang-orang yang beriman! Sesungguhnya meminum khamr, berjudi, (berkorban untuk) berhala, dan mengundi nasib dengan anak panah, adalah perbuatan keji dan termasuk perbuatan setan. Maka jauhilah (perbuatan-perbuatan) itu agar kamu beruntung." (QS. Al-Ma'idah: 90)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-xl space-y-2">
+                        <h4 class="font-bold text-emerald-900 text-base">Cara Menghindari Pengaruh Minuman Keras</h4>
+                        <p class="text-xs sm:text-sm text-emerald-800">
+                            • Memperkuat keimanan dan ketaqwaan dengan rajin beribadah.<br>
+                            • Menolak dengan tegas ajakan untuk mencoba alkohol.<br>
+                            • Mengisi waktu luang dengan kegiatan positif seperti olahraga dan seni.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SUB TAB 3: NARKOBA -->
+                <div id="subtab-materi-narkoba" class="hidden mt-6 space-y-6">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="text-lg font-bold text-navy-900 flex items-center gap-2">
+                            <i class="fa-solid fa-capsules text-emerald-600"></i> Bahaya & Penyalahgunaan Narkoba
+                        </h3>
+                        <p class="text-slate-700 leading-relaxed text-sm">
+                            <strong>Narkoba</strong> (Narkotika, Psikotropika, dan Bahan Adiktif lainnya) adalah zat atau obat yang dapat menyebabkan penurunan kesadaran, hilangnya rasa nyeri, serta menimbulkan ketergantungan (adiksi) yang sangat kuat. Dalam syariat Islam, Narkoba dikategorikan sebagai khamr atau <em>mufattir</em> (zat yang melelahkan/merusak akal dan tubuh).
+                        </p>
+                    </div>
+
+                    <!-- Jenis & Hadis -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3">
+                            <h4 class="font-bold text-slate-900 text-base flex items-center gap-2 text-emerald-600">
+                                <i class="fa-solid fa-vial"></i> Jenis-jenis Narkoba Umum
+                            </h4>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                <li><strong>Narkotika:</strong> Ganja, Morfin, Heroin, Kokain.</li>
+                                <li><strong>Psikotropika:</strong> Sabu-sabu, Ekstasi, Amphetamine.</li>
+                                <li><strong>Zat Adiktif Lain:</strong> Lem beraroma menyengat, inhalan, alkohol pekat.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-navy-900 text-white p-5 rounded-xl space-y-3 border border-navy-800">
+                            <h4 class="font-bold text-emerald-400 text-base flex items-center gap-2">
+                                <i class="fa-solid fa-scroll"></i> Hadis Rasulullah SAW
+                            </h4>
+                            <p class="arabic-text text-xl text-emerald-300 text-right">
+                                كُلُّ مُسْكِرٍ خَمْرٌ وَكُلُّ مُسْكِرٍ حَرَامٌ
+                            </p>
+                            <p class="text-xs text-slate-300 italic font-mono">
+                                "Kullu muskirin khamrun wa kullu muskirin ḥarām."
+                            </p>
+                            <p class="text-xs sm:text-sm text-slate-200">
+                                "Every intoxicant is khamr, and every intoxicant is unlawful (haram)." (HR. Muslim)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 p-5 rounded-xl space-y-2">
+                        <h4 class="font-bold text-red-900 text-base">Upaya Pencegahan & Benteng Remaja</h4>
+                        <p class="text-xs sm:text-sm text-red-800">
+                            1. <strong>Pencegahan Diri:</strong> Katakan TIDAK pada Narkoba tanpa ragu.<br>
+                            2. <strong>Pencegahan Keluarga:</strong> Terbuka dan komunikatif dengan orang tua.<br>
+                            3. <strong>Pencegahan Lingkungan:</strong> Mengikuti kegiatan remaja masjid (RM) dan karang taruna.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 3: FITUR INTERAKTIF ================= -->
+        <section id="page-interaktif" class="hidden space-y-8">
+            <!-- Header -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-extrabold text-navy-900">Fitur Interaktif & Edukatif</h2>
+                <p class="text-slate-600 text-sm">Gunakan media interaktif di bawah ini untuk memperdalam pemahaman materi Bab 3.</p>
+            </div>
+
+            <!-- 1. VIDEO PEMBELAJARAN (PLACEHOLDER/EMBED) -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-red-100 text-red-600 rounded-xl flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">1. Video Edukasi Bahaya Tawuran & Narkoba</h3>
+                        <p class="text-xs text-slate-500">Tonton video ringkasan untuk gambaran visual kontekstual.</p>
+                    </div>
+                </div>
+
+                <div class="aspect-video w-full bg-slate-900 rounded-2xl flex flex-col items-center justify-center text-white p-6 relative overflow-hidden shadow-inner border border-slate-800">
+                    <div class="text-center space-y-3 max-w-md">
+                        <div class="w-16 h-16 bg-emerald-500/90 rounded-full flex items-center justify-center text-2xl mx-auto shadow-lg hover:scale-110 transition duration-200 cursor-pointer" onclick="alert('Memutar media edukasi interaktif PAI XI...')">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </div>
+                        <p class="font-bold text-base sm:text-lg">Media Pembelajaran Digital PAI & BP</p>
+                        <p class="text-xs text-slate-300">"Generasi Cerdas Bebas Perkelahian, Miras, dan Narkoba"</p>
+                        <span class="inline-block bg-slate-800 text-emerald-400 text-xs px-3 py-1 rounded-full border border-slate-700">SMAS AL-HILAAL TEHORU</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. STUDI KASUS INTERAKTIF -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-clipboard-question"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">2. Analisis Studi Kasus Remaja</h3>
+                        <p class="text-xs text-slate-500">Pilih kasus di bawah ini lalu pelajari analisis dan solusi Islami.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button onclick="loadCase(1)" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-500 bg-slate-50 text-left transition space-y-2">
+                        <span class="text-xs font-bold text-red-600 uppercase">Kasus 01</span>
+                        <h4 class="font-bold text-slate-900 text-sm">Provokasi Media Sosial Menyebabkan Tawuran</h4>
+                    </button>
+                    <button onclick="loadCase(2)" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-500 bg-slate-50 text-left transition space-y-2">
+                        <span class="text-xs font-bold text-amber-600 uppercase">Kasus 02</span>
+                        <h4 class="font-bold text-slate-900 text-sm">Bujukan Mengonsumsi Miras di Pesta Remaja</h4>
+                    </button>
+                    <button onclick="loadCase(3)" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-500 bg-slate-50 text-left transition space-y-2">
+                        <span class="text-xs font-bold text-emerald-600 uppercase">Kasus 03</span>
+                        <h4 class="font-bold text-slate-900 text-sm">Penyalahgunaan Obat Terlarang Akibat Stres</h4>
+                    </button>
+                </div>
+
+                <!-- Case Content Container -->
+                <div id="case-display-box" class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
+                    <h4 id="case-title" class="font-bold text-lg text-slate-900">Pilih Kasus Di Atas</h4>
+                    <p id="case-desc" class="text-sm text-slate-600">Klik salah satu tombol kasus untuk menampilkan cerita dan analisis solusinya.</p>
+                    <div id="case-solution-box" class="hidden bg-emerald-50 border border-emerald-200 p-4 rounded-lg space-y-2">
+                        <p class="text-xs font-bold text-emerald-900 uppercase">Solusi Islami & Analisis Guru:</p>
+                        <p id="case-solution-text" class="text-sm text-emerald-950"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. GAME EDUKATIF "BENAR ATAU SALAH" -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">3. Permainan Mini: Benar atau Salah?</h3>
+                            <p class="text-xs text-slate-500">Uji ketangkasan berpikirmu mengenai materi Bab 3.</p>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-full">
+                        Skor Game: <span id="game-score">0</span> / 50
+                    </div>
+                </div>
+
+                <div id="tf-game-container" class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
+                    <p id="tf-question-text" class="font-bold text-base text-slate-900">Klik tombol "Mulai Game" untuk bermain.</p>
+                    <div class="flex gap-4">
+                        <button onclick="checkTFAnswer(true)" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow transition">
+                            <i class="fa-solid fa-check mr-1"></i> BENAR
+                        </button>
+                        <button onclick="checkTFAnswer(false)" class="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow transition">
+                            <i class="fa-solid fa-xmark mr-1"></i> SALAH
+                        </button>
+                    </div>
+                    <div id="tf-feedback" class="text-center font-bold text-sm hidden py-2 rounded-lg"></div>
+                </div>
+            </div>
+
+            <!-- 4. REFLEKSI DIRI -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-pen-fancy"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">4. Form Refleksi Diri Siswa</h3>
+                        <p class="text-xs text-slate-500">Tuliskan pemikiran jujurmu untuk disimpan sebagai bahan evaluasi.</p>
+                    </div>
+                </div>
+
+                <form onsubmit="saveReflection(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">1. Apa pelajaran paling berharga yang kamu dapatkan hari ini?</label>
+                        <textarea id="ref-1" required rows="2" class="w-full p-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Tuliskan jawabanmu di sini..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">2. Mengapa seorang muslim wajib menjauhi perkelahian, miras, dan narkoba?</label>
+                        <textarea id="ref-2" required rows="2" class="w-full p-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Tuliskan jawabanmu di sini..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">3. Apa komitmen nyata yang akan kamu lakukan mulai hari ini?</label>
+                        <textarea id="ref-3" required rows="2" class="w-full p-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Tuliskan komitmenmu..."></textarea>
+                    </div>
+                    <button type="submit" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl shadow transition">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Hasil Refleksi
+                    </button>
+                </form>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 4: EVALUASI KUIS ================= -->
+        <section id="page-evaluasi" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-navy-900">Evaluasi Pembelajaran (Kuis 10 Soal)</h2>
+                        <p class="text-slate-600 text-sm">Selesaikan kuis ini untuk membuka Sertifikat Kelulusanmu.</p>
+                    </div>
+                    <div class="bg-navy-900 text-white px-4 py-2 rounded-xl text-center">
+                        <span class="text-xs text-slate-400 block">Kriteria Ketuntasan (KKM)</span>
+                        <span class="text-lg font-bold text-emerald-400">70 / 100</span>
+                    </div>
+                </div>
+
+                <!-- Input Nama Siswa untuk Sertifikat -->
+                <div class="mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-col sm:flex-row items-center gap-4">
+                    <label class="text-sm font-bold text-emerald-950 whitespace-nowrap">Nama Lengkap Siswa:</label>
+                    <input type="text" id="quiz-student-name" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Masukkan nama lengkapmu sebelum mengerjakan..." value="Ahmad Al-Farisi">
+                </div>
+
+                <!-- Quiz Card Container -->
+                <div id="quiz-container" class="mt-6 space-y-6">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100 pb-2">
+                        <span>Soal <span id="quiz-current-num">1</span> dari 10</span>
+                        <span>Skor Sementara: <span id="quiz-temp-score">0</span></span>
+                    </div>
+
+                    <h3 id="quiz-question-text" class="text-base sm:text-lg font-bold text-navy-900">
+                        Memuat pertanyaan...
+                    </h3>
+
+                    <div id="quiz-options-container" class="space-y-3">
+                        <!-- Options will be generated dynamically -->
+                    </div>
+
+                    <div id="quiz-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium space-y-1">
+                        <!-- Instant feedback message -->
+                    </div>
+
+                    <div class="flex justify-end pt-4 border-t border-slate-100">
+                        <button id="quiz-next-btn" onclick="nextQuestion()" class="hidden px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow transition">
+                            Soal Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result Display (Hidden initially) -->
+                <div id="quiz-result-container" class="hidden mt-6 bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-5">
+                    <div class="w-20 h-20 mx-auto bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-4xl shadow">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h3 class="text-2xl font-extrabold text-navy-900">Kuis Evaluasi Selesai!</h3>
+                        <p id="quiz-student-result-name" class="text-sm font-bold text-slate-600"></p>
+                    </div>
+
+                    <div class="inline-block bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-xs w-full">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block">Nilai Akhir Anda</span>
+                        <span id="quiz-final-score" class="text-5xl font-black text-emerald-600 block py-2">0</span>
+                        <span id="quiz-pass-status" class="inline-block px-3 py-1 rounded-full text-xs font-bold"></span>
+                    </div>
+
+                    <div class="flex justify-center gap-4 pt-4">
+                        <button onclick="restartQuiz()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl transition">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Ulangi Kuis
+                        </button>
+                        <button onclick="switchTab('sertifikat')" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow transition">
+                            <i class="fa-solid fa-certificate mr-1"></i> Lihat Sertifikat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 5: SERTIFIKAT DIGITAL ================= -->
+        <section id="page-sertifikat" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-navy-900">Sertifikat Kelulusan Digital</h2>
+                        <p class="text-slate-600 text-sm">Sertifikat resmi penghargaan atas penyelesaian modul PAI Bab 3.</p>
+                    </div>
+                    <button onclick="window.print()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow transition flex items-center gap-2">
+                        <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
+                    </button>
+                </div>
+
+                <!-- CERTIFICATE DISPLAY BOX -->
+                <div id="certificate-print-area" class="mt-6 bg-amber-50/40 p-6 sm:p-10 rounded-2xl border-4 border-amber-600/30 relative overflow-hidden shadow-xl text-center space-y-6">
+                    <!-- Background Frame Accents -->
+                    <div class="absolute top-2 left-2 w-16 h-16 border-t-4 border-l-4 border-amber-600"></div>
+                    <div class="absolute top-2 right-2 w-16 h-16 border-t-4 border-r-4 border-amber-600"></div>
+                    <div class="absolute bottom-2 left-2 w-16 h-16 border-b-4 border-l-4 border-amber-600"></div>
+                    <div class="absolute bottom-2 right-2 w-16 h-16 border-b-4 border-r-4 border-amber-600"></div>
+
+                    <!-- Header Sertifikat -->
+                    <div class="space-y-1">
+                        <div class="w-12 h-12 bg-navy-900 text-amber-400 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-2">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <h3 class="text-xs sm:text-sm font-bold uppercase tracking-widest text-slate-500">SMAS AL-HILAAL TEHORU</h3>
+                        <h2 class="text-2xl sm:text-4xl font-extrabold text-navy-900 tracking-tight">SERTIFIKAT KELULUSAN</h2>
+                        <p class="text-xs text-slate-500 italic">Nomor: PAI-XI/BAB3/2026/089</p>
+                    </div>
+
+                    <!-- Body Sertifikat -->
+                    <div class="space-y-3 max-w-2xl mx-auto">
+                        <p class="text-xs sm:text-sm text-slate-600">Diberikan secara terhormat kepada peserta didik:</p>
+                        <h4 id="cert-student-name" class="text-2xl sm:text-3xl font-extrabold text-emerald-700 underline underline-offset-8">
+                            AHMAD AL-FARISI
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed pt-2">
+                            Telah menyelesaikan seluruh rangkaian Pembelajaran Interaktif & Evaluasi Kuis pada 
+                            <strong>Mata Pelajaran Pendidikan Agama Islam dan Budi Pekerti (Bab 3: Menghindari Perkelahian Antar Pelajar, Miras, dan Narkoba)</strong> 
+                            dengan hasil Nilai Evaluasi Akhir:
+                        </p>
+                        <div class="text-3xl font-black text-navy-900 py-1" id="cert-score-display">
+                            NILAI: <span class="text-emerald-600">90 / 100</span>
+                        </div>
+                    </div>
+
+                    <!-- Tanda Tangan & Legitimasi -->
+                    <div class="grid grid-cols-2 gap-4 pt-8 border-t border-amber-200/80 max-w-xl mx-auto text-xs sm:text-sm">
+                        <div class="text-center space-y-8">
+                            <p class="text-slate-500">Mengetahui,<br>Kepala SMAS AL-HILAAL TEHORU</p>
+                            <div class="font-bold text-navy-900 border-b border-slate-400 pb-1 mx-auto w-3/4">
+                                ( H. Ahmad, M.Pd.I )
+                            </div>
+                        </div>
+                        <div class="text-center space-y-8">
+                            <p class="text-slate-500">Tehoru, <span id="cert-date">4 November 2026</span><br>Guru Pengampu PAI</p>
+                            <div class="font-bold text-emerald-800 border-b border-emerald-600 pb-1 mx-auto w-3/4">
+                                Sriyati Hafifah Hatapayo, S.Pd., Gr.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 6: RUANG GURU (TEACHER AREA) ================= -->
+        <section id="page-guru" class="hidden space-y-6">
+            <div class="bg-navy-900 text-white p-6 rounded-2xl shadow-md border border-navy-800 flex items-center justify-between">
+                <div>
+                    <span class="text-xs font-bold text-emerald-400 uppercase">Khusus Tenaga Pendidik</span>
+                    <h2 class="text-2xl font-extrabold">Ruang Guru & Dashboard Administrasi</h2>
+                    <p class="text-xs text-slate-300">SMAS AL-HILAAL TEHORU • Pengampu: Sriyati Hafifah Hatapayo, S.Pd., Gr.</p>
+                </div>
+                <button onclick="switchTab('beranda')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg border border-slate-700">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar Ruang Guru
+                </button>
+            </div>
+
+            <!-- Tab Admin Inside Teacher Room -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Modul Ajar Summary -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+                    <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-file-lines text-emerald-600"></i> Ringkasan Modul Ajar (Fase F)
+                    </h3>
+                    <div class="text-xs text-slate-600 space-y-2">
+                        <p><strong>Capaian Pembelajaran (CP):</strong> Peserta didik mampu menganalisis bahaya perkelahian antar pelajar, miras, dan narkoba dari sudut pandang Al-Qur'an dan Hadis serta menerapkannya dalam kehidupan sehari-hari.</p>
+                        <p><strong>Alur Tujuan Pembelajaran (ATP):</strong> Mengidentifikasi dalil -> Menganalisis faktor & dampak -> Menunjukkan akhlakul karimah.</p>
+                        <p><strong>KKM / KKTP:</strong> 70 / 100</p>
+                    </div>
+                </div>
+
+                <!-- Bank Soal & Kunci -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+                    <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-key text-amber-600"></i> Kunci Jawaban Evaluasi
+                    </h3>
+                    <div class="text-xs text-slate-600 grid grid-cols-2 gap-2">
+                        <span>1. A (QS. Al-Hujurat: 10)</span>
+                        <span>2. B (Menghilangkan Akal)</span>
+                        <span>3. C (Pengendalian Diri)</span>
+                        <span>4. A (Khamr)</span>
+                        <span>5. D (Keji & Perbuatan Setan)</span>
+                        <span>6. B (Kullu muskirin khamr)</span>
+                        <span>7. A (Tasamuh / Toleransi)</span>
+                        <span>8. C (Sirosis & Saraf)</span>
+                        <span>9. D (Akhlak Mulia)</span>
+                        <span>10. B (Ta'awun dalam kebaikan)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LKPD Printable section -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-print text-indigo-600"></i> Lembar Kerja Peserta Didik (LKPD) Cetak
+                </h3>
+                <p class="text-xs text-slate-600">Unduh atau cetak LKPD mandiri untuk kegiatan diskusi tatap muka di kelas.</p>
+                <button onclick="alert('Mencetak berkas LKPD PAI Bab 3 SMAS AL-HILAAL TEHORU...')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow">
+                    <i class="fa-solid fa-download mr-1"></i> Cetak Form LKPD (PDF)
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER & MOTIVATION -->
+    <footer class="bg-navy-950 text-white mt-12 border-t border-navy-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+            <!-- Motivasi Penutup -->
+            <div class="bg-navy-900 p-6 rounded-2xl border border-navy-800 text-center max-w-3xl mx-auto space-y-2">
+                <p class="text-emerald-400 font-bold text-sm sm:text-base">
+                    "Remaja hebat bukanlah mereka yang ditakuti karena kekuatannya, tetapi mereka yang dihormati karena akhlaknya. Jauhi perkelahian, miras, dan narkoba. Jadilah generasi muslim yang beriman, berilmu, dan bermanfaat bagi sesama."
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4 pt-4 border-t border-navy-900">
+                <div>
+                    <p class="font-bold text-slate-300">SMAS AL-HILAAL TEHORU</p>
+                    <p>Guru Pengampu: Sriyati Hafifah Hatapayo, S.Pd., Gr.</p>
+                </div>
+                <p>© 2026 Media Pembelajaran Digital PAI & BP. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ================= MODAL DIALOGS ================= -->
+
+    <!-- Modal Petunjuk -->
+    <div id="modal-petunjuk" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white max-w-lg w-full rounded-2xl p-6 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="font-bold text-lg text-slate-900"><i class="fa-solid fa-circle-info text-emerald-600 mr-2"></i>Petunjuk Penggunaan</h3>
+                <button onclick="closeModal('modal-petunjuk')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="text-xs sm:text-sm text-slate-600 space-y-2">
+                <p>1. Gunakan menu di bagian atas untuk berpindah antar halaman (Beranda, Materi, Interaktif, Evaluasi, Sertifikat).</p>
+                <p>2. Baca dan pelajari setiap materi Bab 3 yang terbagi dalam 3 sub-bab utama.</p>
+                <p>3. Coba fitur simulasi studi kasus, video, dan permainan edukatif untuk mengasah pemahaman.</p>
+                <p>4. Kerjakan Evaluasi Kuis 10 soal untuk mendapatkan Nilai dan Sertifikat Digital secara otomatis.</p>
+            </div>
+            <button onclick="closeModal('modal-petunjuk')" class="w-full py-2 bg-emerald-600 text-white font-bold rounded-xl text-xs">Paham & Tutup</button>
+        </div>
+    </div>
+
+    <!-- Modal Tujuan Pembelajaran -->
+    <div id="modal-tujuan" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white max-w-lg w-full rounded-2xl p-6 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="font-bold text-lg text-slate-900"><i class="fa-solid fa-bullseye text-emerald-600 mr-2"></i>Tujuan Pembelajaran</h3>
+                <button onclick="closeModal('modal-tujuan')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc list-inside">
+                <li>Menjelaskan pengertian dan faktor penyebab perkelahian antarpelajar.</li>
+                <li>Menganalisis dampak negatif perkelahian antarpelajar bagi diri dan masyarakat.</li>
+                <li>Menjelaskan pengertian, bahaya, dan hukum minuman keras (khamr).</li>
+                <li>Menjelaskan bahaya dan upaya pencegahan penyalahgunaan narkoba.</li>
+                <li>Mengidentifikasi dalil Al-Qur'an (QS. Al-Hujurat: 10-11, QS. Al-Ma'idah: 90-91) dan Hadis Nabi.</li>
+                <li>Menunjukkan perilaku kontrol diri dan tanggung jawab sosial.</li>
+            </ul>
+            <button onclick="closeModal('modal-tujuan')" class="w-full py-2 bg-emerald-600 text-white font-bold rounded-xl text-xs">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Modal Teacher PIN Security -->
+    <div id="modal-teacher-pin" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white max-w-sm w-full rounded-2xl p-6 space-y-4 shadow-2xl text-center">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg text-slate-900">Akses Ruang Guru</h3>
+                <p class="text-xs text-slate-500">Masukkan PIN Keamanan Khusus Pendidik (Default: 1234)</p>
+            </div>
+            <input type="password" id="teacher-pin-input" maxlength="4" class="w-full p-3 text-center text-xl font-bold border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none tracking-widest" placeholder="••••">
+            <div class="flex gap-2">
+                <button onclick="closeModal('modal-teacher-pin')" class="flex-1 py-2 bg-slate-200 text-slate-700 font-bold rounded-xl text-xs">Batal</button>
+                <button onclick="verifyTeacherPin()" class="flex-1 py-2 bg-emerald-600 text-white font-bold rounded-xl text-xs">Masuk</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // Tab Navigation Logic
+        function switchTab(tabId) {
+            const pages = ['beranda', 'materi', 'interaktif', 'evaluasi', 'sertifikat', 'guru'];
+            pages.forEach(p => {
+                document.getElementById(`page-${p}`).classList.add('hidden');
+                const navBtn = document.getElementById(`nav-${p}`);
+                if (navBtn) navBtn.classList.remove('active');
+            });
+
+            document.getElementById(`page-${tabId}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) activeNav.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchSubTab(subId) {
+            const subtabs = ['materi-perkelahian', 'materi-miras', 'materi-narkoba'];
+            subtabs.forEach(s => {
+                document.getElementById(`subtab-${s}`).classList.add('hidden');
+                document.getElementById(`subnav-${s}`).classList.remove('active');
+            });
+
+            document.getElementById(`subtab-${subId}`).classList.remove('hidden');
+            document.getElementById(`subnav-${subId}`).classList.add('active');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Modal Control
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        function openTeacherPinModal() { openModal('modal-teacher-pin'); }
+        function verifyTeacherPin() {
+            const pin = document.getElementById('teacher-pin-input').value;
+            if (pin === '1234') {
+                closeModal('modal-teacher-pin');
+                switchTab('guru');
+                document.getElementById('teacher-pin-input').value = '';
+            } else {
+                alert('PIN Salah! Masukkan PIN default: 1234');
+            }
+        }
+
+        // Case Studies Data
+        const caseStudies = {
+            1: {
+                title: "Kasus 1: Provokasi Media Sosial Menyebabkan Tawuran",
+                desc: "Sebuah kelompok pelajar SMA terprovokasi oleh ejekan di kolom komentar media sosial dari sekolah rival. Mereka berkumpul dan berencana membawa senjata tumpul untuk saling menyerang di jalan umum.",
+                solution: "Islam mengajarkan tabayyun (klarifikasi) saat menerima informasi dan melarang sikap saling mengolok (QS. Al-Hujurat: 11). Solusinya adalah mengabaikan provokasi, melaporkan pada pihak guru/sekolah, serta mengedepankan perdamaian."
+            },
+            2: {
+                title: "Kasus 2: Bujukan Mengonsumsi Miras di Pesta Remaja",
+                desc: "Rian diundang ke pesta ulang tahun temannya. Di sana, ia dipaksa dan diolok-olok 'tidak gaul' jika tidak meminum minuman beralkohol yang telah disediakan.",
+                solution: "Setiap barang memabukkan adalah khamr dan hukumnya haram (QS. Al-Ma'idah: 90). Rian harus berani menolak tegas (assertive), meninggalkan lingkungan berbahaya tersebut, dan memilih lingkungan teman yang berakhlak mulia."
+            },
+            3: {
+                title: "Kasus 3: Penyalahgunaan Obat Terlarang Akibat Stres",
+                desc: "Seorang pelajar merasa tertekan karena masalah nilai dan ujian. Ia mendapatkan tawaran obat penenang terlarang dari kenalan baru yang menjanjikan rasa tenang instan.",
+                solution: "Narkoba merusak akal dan jasmani. Islam mengajarkan bahwa ketenangan sejati diperoleh melalui zikir, doa, dan mendekatkan diri kepada Allah SWT. Masalah akademik harus diselesaikan dengan bimbingan konseling dan belajar teratur."
+            }
+        };
+
+        function loadCase(id) {
+            const c = caseStudies[id];
+            document.getElementById('case-title').innerText = c.title;
+            document.getElementById('case-desc').innerText = c.desc;
+            document.getElementById('case-solution-text').innerText = c.solution;
+            document.getElementById('case-solution-box').classList.remove('hidden');
+        }
+
+        // True/False Game Data
+        const tfQuestions = [
+            { q: "Merasakan duka mendalam dan kehancuran nama baik keluarga adalah salah satu dampak perkelahian pelajar.", a: true },
+            { q: "Mengonsumsi alkohol dalam jumlah sedikit tetap diperbolehkan dalam syariat Islam.", a: false },
+            { q: "QS. Al-Hujurat ayat 10 menegaskan bahwa sesama orang beriman itu adalah bersaudara.", a: true },
+            { q: "Narkoba hanya berdampak buruk pada kesehatan fisik, tidak merusak sistem saraf otak.", a: false },
+            { q: "Menahan emosi saat marah adalah ciri orang yang kuat menurut hadis Rasulullah SAW.", a: true }
+        ];
+
+        let tfIndex = 0;
+        let tfScore = 0;
+
+        function startTFGame() {
+            tfIndex = 0;
+            tfScore = 0;
+            document.getElementById('game-score').innerText = tfScore;
+            showTFQuestion();
+        }
+
+        function showTFQuestion() {
+            if (tfIndex < tfQuestions.length) {
+                document.getElementById('tf-question-text').innerText = `${tfIndex + 1}. ${tfQuestions[tfIndex].q}`;
+                document.getElementById('tf-feedback').classList.add('hidden');
+            } else {
+                document.getElementById('tf-question-text').innerText = `Permainan Selesai! Skor Akhir Kamu: ${tfScore} / 50`;
+                document.getElementById('tf-feedback').classList.add('hidden');
+            }
+        }
+
+        function checkTFAnswer(userAns) {
+            if (tfIndex >= tfQuestions.length) return;
+            const correct = tfQuestions[tfIndex].a === userAns;
+            const fb = document.getElementById('tf-feedback');
+            fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-red-100', 'text-red-800');
+
+            if (correct) {
+                tfScore += 10;
+                fb.classList.add('bg-emerald-100', 'text-emerald-800');
+                fb.innerText = "Jawaban Tepat! (+10 Poin)";
+            } else {
+                fb.classList.add('bg-red-100', 'text-red-800');
+                fb.innerText = "Jawaban Kurang Tepat!";
+            }
+
+            document.getElementById('game-score').innerText = tfScore;
+            tfIndex++;
+            setTimeout(showTFQuestion, 1200);
+        }
+
+        function saveReflection(e) {
+            e.preventDefault();
+            alert('Hasil refleksi diri berhasil disimpan di perangkat Anda! Terima kasih telah merenungkan pembelajaran hari ini.');
+        }
+
+        // Quiz Evaluasi Logic (10 Questions)
+        const quizData = [
+            {
+                q: "1. Landasan al-Qur'an yang menjelaskan bahwa sesama orang beriman itu sesungguhnya bersaudara terdapat dalam...",
+                options: ["A. QS. Al-Hujurat ayat 10", "B. QS. Al-Ma'idah ayat 90", "C. QS. Al-Baqarah ayat 183", "D. QS. An-Nisa ayat 59"],
+                ans: 0,
+                exp: "QS. Al-Hujurat ayat 10 menyatakan: 'Innamal-mu'minūna ikhwatun...' yang berarti orang-orang beriman itu bersaudara."
+            },
+            {
+                q: "2. Hukum mengonsumsi segala jenis minuman keras (khamr) dalam syariat Islam adalah...",
+                options: ["A. Makruh", "B. Haram", "C. Mubah", "D. Sunnah"],
+                ans: 1,
+                exp: "Islam secara tegas mengharamkan khamr karena dapat merusak akal sehat dan memicu kejahatan."
+            },
+            {
+                q: "3. Menurut Rasulullah SAW, orang yang kuat bukanlah yang pandai bergulat, melainkan orang yang sanggup...",
+                options: ["A. Mengalahkan musuhnya di medan pertempuran", "B. Menjuarai kompetisi olahraga", "C. Menahan dirinya saat marah", "D. Menentang aturan sekolah"],
+                ans: 2,
+                exp: "HR. Bukhari & Muslim: Orang kuat sejati adalah yang mampu mengendalikan hawa nafsu dan emosinya."
+            },
+            {
+                q: "4. Istilah syariat untuk segala sesuatu yang memabukkan dan menutup akal pikiran adalah...",
+                options: ["A. Khamr", "B. Riba", "C. Maisir", "D. Hasad"],
+                ans: 0,
+                exp: "Khamr secara bahasa berarti menutup (akal), dan secara istilah adalah zat yang memabukkan."
+            },
+            {
+                q: "5. Dalam QS. Al-Ma'idah ayat 90, meminum khamr dan berjudi dikategorikan sebagai perbuatan keji dan termasuk perbuatan...",
+                options: ["A. Malaikat", "B. Manusia bijak", "C. Orang terdidik", "D. Setan"],
+                ans: 3,
+                exp: "Ayat tersebut berbunyi: '...rijsum min 'amaliś-śaiṭāni fajtanibūhu' (perbuatan keji termasuk perbuatan setan)."
+            },
+            {
+                q: "6. Potongan hadis 'Kullu muskirin khamrun wa kullu muskirin...' mempunyai kelanjutan...",
+                options: ["A. Waajibun", "B. Harām", "C. Halāl", "D. Makrūh"],
+                ans: 1,
+                exp: "Kelanjutan hadis shahih riwayat Muslim tersebut adalah 'ḥarām' (setiap yang memabukkan adalah haram)."
+            },
+            {
+                q: "7. Sikap saling menghargai dan menghormati perbedaan antarpelajar dinamakan...",
+                options: ["A. Tasamuh", "B. Ta'asub", "C. Takabur", "D. Namimah"],
+                ans: 0,
+                exp: "Tasamuh berarti toleransi, yaitu sikap menghargai orang lain untuk mencegah perkelahian."
+            },
+            {
+                q: "8. Bahaya jangka panjang minuman keras terhadap organ tubuh manusia di antaranya adalah kerusakkan pada...",
+                options: ["A. Gigi dan rambut", "B. Tulang tumit", "C. Organ hati (sirosis) dan saraf otak", "D. Indra pendengaran"],
+                ans: 2,
+                exp: "Miras merusak jaringan hati secara permanen (sirosis) dan menurunkan fungsi sel otak."
+            },
+            {
+                q: "9. Remaja muslim hebat ditunjukkan melalui...",
+                options: ["A. Kebijakan membalas dendam", "B. Jumlah kelompok/geng yang ditakuti", "C. Keterampilan bertengkar", "D. Akhlak mulia dan prestasi bermanfaat"],
+                ans: 3,
+                exp: "Kehormatan seorang muslim diukur dari ketakwaan dan kebaikan akhlaknya bagi sesama."
+            },
+            {
+                q: "10. Tindakan awal yang tepat apabila terjadi perselisihan antar sesama teman di sekolah adalah...",
+                options: ["A. Mengajak teman lain untuk membalas", "B. Melakukan musyawarah & tabayyun dengan tenang", "C. Menyebarkannya di media sosial", "D. Membiarkannya menjadi perkelahian besar"],
+                ans: 1,
+                exp: "Islam memerintahkan fa aṣliḥū (damaikanlah) melalui musyawarah dan tabayyun."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let quizAnswers = [];
+
+        function renderQuestion() {
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quiz-current-num').innerText = currentQuizIndex + 1;
+            document.getElementById('quiz-temp-score').innerText = quizScore;
+            document.getElementById('quiz-question-text').innerText = q.q;
+
+            const optContainer = document.getElementById('quiz-options-container');
+            optContainer.innerHTML = '';
+
+            const fbBox = document.getElementById('quiz-feedback-box');
+            fbBox.classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 rounded-xl border border-slate-200 hover:border-emerald-500 text-left text-sm font-medium transition flex items-center justify-between bg-white hover:bg-emerald-50/50";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle text-slate-300"></i>`;
+                btn.onclick = () => handleAnswer(idx, btn);
+                optContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedIdx, btnElement) {
+            const q = quizData[currentQuizIndex];
+            const isCorrect = selectedIdx === q.ans;
+
+            // Disable all option buttons
+            const buttons = document.querySelectorAll('#quiz-options-container button');
+            buttons.forEach(b => b.disabled = true);
+
+            const fbBox = document.getElementById('quiz-feedback-box');
+            fbBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-red-100', 'text-red-900');
+
+            if (isCorrect) {
+                quizScore += 10;
+                btnElement.classList.add('border-emerald-600', 'bg-emerald-50');
+                fbBox.classList.add('bg-emerald-100', 'text-emerald-900');
+                fbBox.innerHTML = `<p class="font-bold"><i class="fa-solid fa-circle-check mr-1 text-emerald-600"></i> BENAR!</p><p class="text-xs mt-1">${q.exp}</p>`;
+            } else {
+                btnElement.classList.add('border-red-600', 'bg-red-50');
+                fbBox.classList.add('bg-red-100', 'text-red-900');
+                fbBox.innerHTML = `<p class="font-bold"><i class="fa-solid fa-circle-xmark mr-1 text-red-600"></i> COBA LAGI (JAWABAN KURANG TEPAT)</p><p class="text-xs mt-1">${q.exp}</p>`;
+            }
+
+            document.getElementById('quiz-temp-score').innerText = quizScore;
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            if (currentQuizIndex < quizData.length) {
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const resultBox = document.getElementById('quiz-result-container');
+            resultBox.classList.remove('hidden');
+
+            const studentName = document.getElementById('quiz-student-name').value || "Siswa PAI";
+            document.getElementById('quiz-student-result-name').innerText = `Selamat, ${studentName}!`;
+            document.getElementById('quiz-final-score').innerText = `${quizScore}%`;
+
+            const passStatus = document.getElementById('quiz-pass-status');
+            if (quizScore >= 70) {
+                passStatus.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800";
+                passStatus.innerText = "LULUS (Tuntas KKM)";
+            } else {
+                passStatus.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+                passStatus.innerText = "BELUM TUNTAS (Di bawah KKM)";
+            }
+
+            // Update Certificate Data
+            document.getElementById('cert-student-name').innerText = studentName.toUpperCase();
+            document.getElementById('cert-score-display').innerHTML = `NILAI EVALUASI: <span class="text-emerald-600">${quizScore} / 100</span>`;
+        }
+
+        function restartQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-result-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        // Window Init
+        window.onload = function() {
+            renderQuestion();
+            startTFGame();
+        };
+    </script>
+</body>
+</html>
